@@ -34,27 +34,35 @@ int UtilRPI::_check_rpi_version()
 {
     const unsigned int MAX_SIZE_LINE = 50;
     char buffer[MAX_SIZE_LINE];
+    const char zero2Name[]="Zero 2";
     int hw;
 
     FILE *f = fopen("/sys/firmware/devicetree/base/model", "r");
     if (f != nullptr && fgets(buffer, MAX_SIZE_LINE, f) != nullptr) {
-        int ret = sscanf(buffer + 12, "%d", &_rpi_version);
-        fclose(f);
-        if (ret != EOF) {
-            if (_rpi_version > 3)  {
-                _rpi_version = 4;
-            } else if (_rpi_version > 2) {
-                // Preserving old behavior.
-                _rpi_version = 2;
-            } else if (_rpi_version == 0) {
-                // RPi 1 doesn't have a number there, so sscanf() won't have read anything.
-                _rpi_version = 1;
-            }
-
-            printf("%s. (intern: %d)\n", buffer, _rpi_version);
-
-            return _rpi_version;
-        }
+	if(strstr(buffer,zero2Name) != nullptr) {
+		_rpi_version = 2; //This has to be 2 for compatibility (Zero 2W uses same chip die as Rpi3)
+		printf("%s. (intern: %d)\n", buffer, _rpi_version);
+		return _rpi_version;
+	}
+	else {
+        	int ret = sscanf(buffer + 12, "%d", &_rpi_version);
+	        fclose(f);
+	        if (ret != EOF) {
+        	    if (_rpi_version > 3)  {
+	                _rpi_version = 4;
+	            } else if (_rpi_version > 2) {
+	                // Preserving old behavior.
+	                _rpi_version = 2;
+	            } else if (_rpi_version == 0) {
+	                // RPi 1 doesn't have a number there, so sscanf() won't have read anything.
+	                _rpi_version = 1;
+	            }
+	
+	            printf("%s. (intern: %d)\n", buffer, _rpi_version);
+	
+	            return _rpi_version;
+	        }
+	}
     }
 
     // Attempting old method if the version couldn't be read with the new one.
