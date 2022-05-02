@@ -116,7 +116,7 @@ class Board:
             '-Wno-redundant-decls',
             '-Wno-unknown-pragmas',
             '-Wno-trigraphs',
-            '-Werror=shadow',
+            #'-Werror=shadow',
             '-Werror=return-type',
             '-Werror=unused-result',
             '-Werror=unused-variable',
@@ -222,11 +222,11 @@ class Board:
             '-Werror=type-limits',
             '-Werror=undef',
             '-Werror=unused-result',
-            '-Werror=shadow',
+            #'-Werror=shadow',
             '-Werror=unused-value',
             '-Werror=unused-variable',
             '-Werror=delete-non-virtual-dtor',
-            '-Wfatal-errors',
+            #'-Wfatal-errors',
             '-Wno-trigraphs',
             '-Werror=parentheses',
             '-DARDUPILOT_BUILD',
@@ -632,7 +632,7 @@ class chibios(Board):
             '-Wmissing-declarations',
             '-Wno-unused-parameter',
             '-Werror=array-bounds',
-            '-Wfatal-errors',
+            #'-Wfatal-errors',
             '-Werror=uninitialized',
             '-Werror=init-self',
             '-Werror=unused-but-set-variable',
@@ -1045,6 +1045,9 @@ class obal(linux):
         env.DEFINES.update(
             CONFIG_HAL_BOARD_SUBTYPE = 'HAL_BOARD_SUBTYPE_LINUX_OBAL_V1',
         )
+        
+        #Just for now
+        env.LINKFLAGS += ['-L/home/luk/dev/ardupilot/plane/modules/pigpio']
 
 class SITL_static(sitl):
     def configure_env(self, cfg, env):

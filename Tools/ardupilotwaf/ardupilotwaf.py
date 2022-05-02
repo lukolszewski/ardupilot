@@ -261,8 +261,14 @@ def ap_program(bld,
         program_dir = program_groups[0]
 
     name = os.path.join(program_dir, program_name)
-
     tg_constructor = bld.program
+    
+    #A bit of a hack, but works
+    if("-lpigpio" not in bld.env.LDFLAGS):
+        print("LDFLAGS IS:",bld.env.LDFLAGS)
+        bld.env.LDFLAGS += ['-lpigpio']
+
+
     if bld.env.AP_PROGRAM_AS_STLIB:
         tg_constructor = bld.stlib
     else:

@@ -9,11 +9,11 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <utility>
+//#include <utility>
 
 #include <pigpio.h>
 
-#include <AP_HAL/AP_HAL.h>
+//#include <AP_HAL/AP_HAL.h>
 #include <GCS_MAVLink/GCS.h>
 
 #include "GPIO.h"
@@ -22,9 +22,13 @@
 using namespace Linux;
 
 
-RCOutput_PIGPIO::RCOutput_PIGPIO(uint8_t channels)
+RCOutput_PIGPIO::RCOutput_PIGPIO(uint8_t ch)
 {
-    channels = sizeof(PIGPIO_CHANNELS_TO_GPIO_MAPPING);
+    if(ch>sizeof(PIGPIO_CHANNELS_TO_GPIO_MAPPING)) {
+        printf("Error. More channels requested than defined in pigpio map! Trimming.");
+        ch=sizeof(PIGPIO_CHANNELS_TO_GPIO_MAPPING);
+    }
+    channels = ch;
     for(uint8_t i=0;i<channels;i++){
         channels_enabled[i] = false;
     }

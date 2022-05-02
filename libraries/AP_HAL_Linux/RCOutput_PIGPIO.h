@@ -9,7 +9,7 @@ namespace Linux {
 
 class RCOutput_PIGPIO : public AP_HAL::RCOutput {
     public:
-        RCOutput_PIGPIO(uint8_t channels); //sample_rate can be in 1,2,4,5,8,10uS
+        RCOutput_PIGPIO(uint8_t ch);
         
         ~RCOutput_PIGPIO();
         void init() override;

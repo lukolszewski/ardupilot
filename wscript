@@ -399,7 +399,7 @@ def configure(cfg):
     cfg.env.append_value('GIT_SUBMODULES', 'mavlink')
 
     cfg.env.prepend_value('INCLUDES', [
-        cfg.srcnode.abspath() + '/libraries/',
+        cfg.srcnode.abspath() + '/libraries/',cfg.srcnode.abspath() + '/modules/pigpio/'
     ])
 
     cfg.find_program('rsync', mandatory=False)
