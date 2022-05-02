@@ -19,3 +19,6 @@
 [submodule "modules/libcanard"]
 	path = modules/libcanard
 	url = https://github.com/ArduPilot/libcanard.git
+[submodule "modules/pigpio"]
+	path = modules/pigpio
+	url = https://github.com/joan2937/pigpio.git
